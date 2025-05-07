@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тест: Какая профессия тебе подходит?</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(to right, #fceabb, #f8b500);
+      color: #333;
+      text-align: center;
+      padding: 20px;
+      overflow: hidden;
+    }
+    .container {
+      background: #fff7d5;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      max-width: 700px;
+      margin: 0 auto;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
+    }
+    h1 {
+      color: #ff6f00;
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      animation: bounce 1s infinite alternate;
+    }
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+    .question {
+      margin-top: 30px;
+      font-size: 1.3em;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 90%;
+      font-size: 1em;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-top: 15px;
+    }
+    button {
+      background-color: #ff9800;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      margin: 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #fb8c00;
+    }
+    #result {
+      font-size: 26px;
+      margin-top: 30px;
+      font-weight: bold;
+      color: #d84315;
+    }
+    .floating-icons {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .icon {
+      width: 50px;
+      position: absolute;
+      animation: float 15s linear infinite;
+      opacity: 0.7;
+    }
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+      }
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 15px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+      button {
+        width: 90%;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-icons">
+    <img src="https://cdn-icons-png.flaticon.com/512/4221/4221454.png" class="icon" style="left:10%; animation-delay: 0s;">
+    <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" class="icon" style="left:30%; animation-delay: 5s;">
+    <img src="https://cdn-icons-png.flaticon.com/512/3595/3595455.png" class="icon" style="left:50%; animation-delay: 10s;">
+    <img src="https://cdn-icons-png.flaticon.com/512/2721/2721294.png" class="icon" style="left:70%; animation-delay: 3s;">
+    <img src="https://cdn-icons-png.flaticon.com/512/3159/3159066.png" class="icon" style="left:85%; animation-delay: 8s;">
+  </div>
+
+  <div class="container">
+    <h1>Узнай, кем ты можешь стать!</h1>
+    <div id="quiz"></div>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const questions = [
+      "Что тебе больше всего нравится делать?",
+      "Как ты проводишь свободное время?",
+      "Что тебя вдохновляет?",
+      "Какие качества тебе ближе всего?",
+      "Что ты хочешь изменить в мире?",
+      "Что бы ты делал, если бы деньги не имели значения?",
+      "Какая деятельность тебя успокаивает?",
+      "Чем ты гордишься?",
+      "Какая твоя мечта с детства?",
+      "Что ты хочешь достичь в жизни?"
+    ];
+
+    let currentQuestion = 0;
+    const answers = [];
+
+    function showQuestion() {
+      const q = questions[currentQuestion];
+      const quizDiv = document.getElementById("quiz");
+      quizDiv.innerHTML = `
+        <div class='question'><h2>${q}</h2></div>
+        <input type="text" id="answerInput" placeholder="Твой ответ...">
+        <br><button onclick="nextQuestion()">Далее</button>
+      `;
+    }
+
+    function nextQuestion() {
+      const input = document.getElementById("answerInput").value.trim();
+      if (!input) return;
+      answers.push(input);
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById("quiz").innerHTML = "";
+      document.getElementById("result").innerHTML = `
+        Спасибо за ответы!<br>
+        На основе твоих мыслей можно будет сделать анализ и подсказать профессию.<br>
+        (Пока анализ вручную — покажи ответы учителю!)<br><br>
+        <strong>Твои ответы:</strong><br><br>
+        ${answers.map((a, i) => `<strong>${i + 1}.</strong> ${a}`).join("<br>")}
+      `;
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
+
+</html>
+
